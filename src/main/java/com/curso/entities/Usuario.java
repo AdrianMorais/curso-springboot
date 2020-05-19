@@ -1,11 +1,16 @@
 package com.curso.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Usuario implements Serializable{
@@ -84,7 +89,16 @@ public class Usuario implements Serializable{
 	private String telefone;
 	private String senha;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedido = new ArrayList<>();
+	
+	public List<Pedido> getPedido() {
+		return pedido;
+	}
+
 	public Usuario() {		
+	
 	}
 	
 	public Usuario(Long id, String nome, String email, String telefone, String senha) {

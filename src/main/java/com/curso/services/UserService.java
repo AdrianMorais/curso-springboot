@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.curso.entities.Usuario;
 import com.curso.repositories.UserRepository;
-import com.sun.el.stream.Optional;
 
 @Service
 public class UserService {

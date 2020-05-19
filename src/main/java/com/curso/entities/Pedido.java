@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.curso.entities.enums.StatusPedido;
+
 @Entity
 public class Pedido implements Serializable{
 
@@ -39,6 +41,13 @@ public class Pedido implements Serializable{
 		this.cliente = cliente;
 	}
 	
+	public StatusPedido getStatusPedido() {
+		return StatusPedido.valueOf(statusPedido);
+	}
+
+	public void setStatusPedido(StatusPedido statusPedido) {
+		this.statusPedido = statusPedido.getCode();
+	}
 	
 	@Override
 	public int hashCode() {
@@ -69,7 +78,10 @@ public class Pedido implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant momento;
+	private Integer statusPedido;
 	
+	
+
 	@ManyToOne
 	@JoinColumn(name = "idCliente")
 	private Usuario cliente;
@@ -78,10 +90,12 @@ public class Pedido implements Serializable{
 		
 	}
 	
-	public Pedido(Long id, Instant momento, Usuario cliente) {
+	public Pedido(Long id, Instant momento,StatusPedido statusPedido, Usuario cliente) {
 		this.id = id;
 		this.momento = momento;
+		setStatusPedido(statusPedido);;
 		this.cliente = cliente;
+		
 	}
 	
 }

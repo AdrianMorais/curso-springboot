@@ -9,12 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.curso.entities.Categoria;
+import com.curso.entities.OrderItem;
 import com.curso.entities.Pagamento;
 import com.curso.entities.Pedido;
 import com.curso.entities.Produto;
 import com.curso.entities.Usuario;
 import com.curso.entities.enums.StatusPedido;
 import com.curso.repositories.CategoriaRepository;
+import com.curso.repositories.OrderItemRepository;
 import com.curso.repositories.PedidoRepository;
 import com.curso.repositories.ProdutoRepository;
 import com.curso.repositories.UserRepository;
@@ -34,6 +36,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -68,11 +73,20 @@ public class TestConfig implements CommandLineRunner {
 		Pedido o3 = new Pedido(null, Instant.parse("2019-07-22T15:21:22Z"),StatusPedido.DELIVERED, u1); 	
 		
 		userRepository.saveAll(Arrays.asList(u1, u2));
-		pedidoRepository.saveAll(Arrays.asList(o1, o2, o3));
+		pedidoRepository.saveAll(Arrays.asList(o1, o2, o3));		
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPreco());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPreco());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPreco());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPreco()); 
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 		
 		Pagamento pay1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
 		o1.setPagamento(pay1);
 		pedidoRepository.save(o1);
+		
+		
 		
 	}
 		

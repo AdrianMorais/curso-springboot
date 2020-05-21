@@ -2,6 +2,8 @@ package com.curso.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,9 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.curso.entities.enums.StatusPedido;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pedido implements Serializable{
@@ -58,6 +62,10 @@ public class Pedido implements Serializable{
 		this.pagamento = pagamento;
 	}
 
+	public Set<OrderItem> getOrderItems() {
+		return items;
+	}
+	
 	
 	@Override
 	public int hashCode() {
@@ -93,10 +101,12 @@ public class Pedido implements Serializable{
 	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private Pagamento pagamento;
 
-	
 	@ManyToOne
 	@JoinColumn(name = "idCliente")
 	private Usuario cliente;
+	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<OrderItem> items = new HashSet<>();
 	
 	public Pedido() {
 		

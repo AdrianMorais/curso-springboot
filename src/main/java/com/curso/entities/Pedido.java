@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.curso.entities.enums.StatusPedido;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pedido implements Serializable{
@@ -97,6 +96,7 @@ public class Pedido implements Serializable{
 	private Long id;
 	private Instant momento;
 	private Integer statusPedido;
+	
 	
 	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private Pagamento pagamento;

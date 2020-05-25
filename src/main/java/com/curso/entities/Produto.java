@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -77,6 +80,15 @@ public class Produto implements Serializable {
 		return true;
 	}
 	
+	@JsonIgnore
+	public Set<Pedido> getPedidos() {
+		Set<Pedido> set = new HashSet<>();
+		for(OrderItem x : items) {
+			set.add(x.getPedido());
+		}
+		return set;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -90,6 +102,8 @@ public class Produto implements Serializable {
 	@JoinTable(name = "Produto_Categoria", 	joinColumns = @JoinColumn(name = "idProduto"), inverseJoinColumns = @JoinColumn(name = "idCategoria"))	
 	private Set<Categoria> categoria = new HashSet<>();
 	
+	@OneToMany(mappedBy = "id.produto")
+	private Set<OrderItem> items = new HashSet<>();
 	
 	public Produto() {
 		

@@ -74,6 +74,10 @@ public class OrderItem  implements Serializable{
 		return id.getProduto();
 	}
 	
+	public Double getSubTotal() {
+		return  preco * quantidade;
+	}
+	
 	public void setProduto(Produto produto) {
 		id.setProduto(produto);
 	}
@@ -88,5 +92,7 @@ public class OrderItem  implements Serializable{
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
+	
+	
 	
 }

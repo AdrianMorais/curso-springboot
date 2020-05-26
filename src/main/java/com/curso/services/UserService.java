@@ -2,6 +2,8 @@ package com.curso.services;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,23 @@ public class UserService {
 	
 	public void delete(Long id) {
 		repository.deleteById(id);
+	}
+	
+	public Usuario update(Long id, Usuario obj) {
+		Usuario entidade = repository.getOne(id);
+		updateData(entidade, obj);
+		return repository.save(entidade);
+	}
+	
+	public void updateData(Usuario entidade, Usuario obj) {
+		try {
+			entidade.setNome(obj.getNome());
+			entidade.setEmail(obj.getEmail());
+			entidade.setTelefone(obj.getSenha());
+			
+		}catch(EntityNotFoundException e) {
+			e.getMessage();
+		}
 	}
 	
 }
